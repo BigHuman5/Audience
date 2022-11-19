@@ -1,6 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Audience.DAL.EF;
+using Audience.BLL.Interfaces;
+using Audience.BLL.Services;
+using Audience.DAL.Interfaces;
+using Audience.DAL.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") 
@@ -9,9 +13,11 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<AudienceDbContext>(options =>
     options.UseSqlServer(connectionString));
 
+builder.Services
+    .AddScoped<IUnitOfWork, EFUnitOfWork>()
+    .AddTransient<IAudiencesServices, AudiencesServices>();
 
 builder.Services.AddControllers();
-
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -28,8 +34,18 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseAuthentication();;
 
-app.UseAuthorization();
+//app.MapControllers();
 
-app.MapControllers();
+// Чтобы с других серверов подключать штуки
+app.UseCors(options => options
+.AllowAnyOrigin()
+.AllowAnyHeader()
+.AllowAnyMethod());
+
+app.UseRouting();
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+});
 
 app.Run();

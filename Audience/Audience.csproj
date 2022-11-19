@@ -20,9 +20,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Audience.Data\Audience.DAL.csproj" />
-    <ProjectReference Include="..\Audience.DAL\Audience.DAL.csproj" />
     <ProjectReference Include="..\Audience.BLL\Audience.BLL.csproj" />
+    <ProjectReference Include="..\Audience.DAL\Audience.DAL.csproj" />
   </ItemGroup>
 
 </Project>

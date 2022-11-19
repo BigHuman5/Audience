@@ -2,9 +2,11 @@
 using Audience.DAL.Entities;
 using Audience.DAL.Interfaces;
 using Audience.Infrastructure.Services;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,34 +21,49 @@ namespace Audience.DAL.Repositories
             this.db = context;
         }
 
-        public Result Create(Class item)
+        public async Task<bool> Create(Class item)
         {
-            if(item.DateTime < DateTime.Now)
-            {
-                return "Нельзя ставить в прошлом";
-            }
-            db.Add(item);
+            await db.Class.AddAsync(item);
             return true;
         }
 
-        public Result Delete(int id)
+        public async Task<bool> Delete(int id)
         {
-            
+            var Class = await db.Class.FindAsync(id);
+            if (Class != null)
+            {
+                db.Class.Remove(Class);
+                return true;
+            }
+            return false;
         }
 
-        public Class Get(int id)
+        public async Task<Class> Get(int id)
         {
-            throw new NotImplementedException();
+            var Class = await db.Class.FindAsync(id);
+            if (Class != null)
+            {
+                return Class;
+            }
+            return null;
         }
 
-        public IEnumerable<Class> GetAll()
+        public async Task<IEnumerable<Class>> GetAll()
         {
-            throw new NotImplementedException();
+            return await db.Class.AsNoTracking().ToListAsync();
         }
 
-        public Result Update(Class item)
+        public async Task<bool> isHaveItem(string item, string mean)
         {
-            throw new NotImplementedException();
+            var Item = await db.Audiences
+                .Where(a => item == mean)
+                .AsNoTracking()
+                .FirstOrDefaultAsync();
+            if (Item != null)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

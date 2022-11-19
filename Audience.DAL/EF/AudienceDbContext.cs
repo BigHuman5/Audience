@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Audience.DAL.EF;
 
-public class AudienceDbContext : IdentityDbContext<IdentityUser>
+public class AudienceDbContext : DbContext
 {
     public DbSet<Class> Class { get; set; }
     public DbSet<Audiences> Audiences { get; set; }

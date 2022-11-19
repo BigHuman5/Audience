@@ -9,10 +9,10 @@ namespace Audience.DAL.Interfaces
 {
     public interface IRepository<T> where T : class
     {
-        IEnumerable<T> GetAll();
-        T Get(int id);
-        Result Create(T item);
-        void Update(T item);
-        void Delete(T item);
+        Task<IEnumerable<T>> GetAll();
+        Task<T> Get(int id);
+        Task<bool> Create(T item);
+        Task<bool> Delete(int id);
+        Task<bool> isHaveItem(string item, string mean);
     }
 }
