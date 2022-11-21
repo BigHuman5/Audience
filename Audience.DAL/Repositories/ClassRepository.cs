@@ -50,12 +50,18 @@ namespace Audience.DAL.Repositories
 
         public async Task<IEnumerable<Class>> GetAll()
         {
-            return await db.Class.AsNoTracking().ToListAsync();
+            var f = await db.Class
+                .Include(p => p.timetableOfClasses)
+                .Include(c=> c.Audiences)
+                .Include(c=> c.Lecturer)
+                .ToListAsync();
+            return f;
+            //return await db.Class.AsNoTracking().ToListAsync();
         }
 
         public async Task<bool> isHaveItem(string item, string mean)
         {
-            var Item = await db.Audiences
+            var Item = await db.Class
                 .Where(a => item == mean)
                 .AsNoTracking()
                 .FirstOrDefaultAsync();

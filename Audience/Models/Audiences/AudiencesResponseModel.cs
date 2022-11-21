@@ -1,8 +1,7 @@
-﻿namespace Audience.Models
+﻿namespace Audience.Models.Audiences
 {
-    public class AudiencesVM
+    public class AudiencesResponseModel
     {
-        public int Id { get; set; }
         public string Number { get; set; }
         public bool IsHaveMedia { get; set; }
     }

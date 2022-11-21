@@ -3,6 +3,8 @@ using Audience.BLL.Interfaces;
 using Audience.DAL.Entities;
 using Audience.DAL.Interfaces;
 using Audience.Infrastructure.Services;
+using AutoMapper;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Audience.BLL.Services
 {
@@ -51,24 +53,26 @@ namespace Audience.BLL.Services
 
         }
 
-        public async Task<Audiences> Get(int id)
+        public async Task<AudiencesDTO> Get(int id)
         {
-            var Audience = await Database.Audiences.Get(id);
-            if (Audience != null)
+            var get = await Database.Audiences.Get(id);
+            if (get != null)
             {
-                return Audience;
+                AudiencesDTO audiencesDTO = new AudiencesDTO
+                {
+                    Id = id,
+                    Number = get.Number,
+                    IsHaveMedia = get.IsHaveMedia,
+                };
+                return audiencesDTO;
             }
             return null;
         }
 
-        public async Task<IEnumerable<Audiences>> GetAll()
+        public async Task<IEnumerable<AudiencesDTO>> GetAll()
         {
-            var Audience = await Database.Audiences.GetAll();
-            if (Audience != null)
-            {
-                return Audience;
-            }
-            return null;
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Audiences, AudiencesDTO>()).CreateMapper();
+            return mapper.Map<IEnumerable<Audiences>, List<AudiencesDTO>>(await Database.Audiences.GetAll());
         }
     }
 }

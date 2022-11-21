@@ -4,6 +4,7 @@ using Audience.DAL.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Audience.DAL.Migrations
 {
     [DbContext(typeof(AudienceDbContext))]
-    partial class AudienceDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221120161829_AddTimeTable")]
+    partial class AddTimeTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -66,7 +69,7 @@ namespace Audience.DAL.Migrations
                     b.Property<bool>("isNeedMedia")
                         .HasColumnType("bit");
 
-                    b.Property<int>("timetableOfClassesId")
+                    b.Property<int>("timetableOfClassesid")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -75,7 +78,7 @@ namespace Audience.DAL.Migrations
 
                     b.HasIndex("LecturerId");
 
-                    b.HasIndex("timetableOfClassesId");
+                    b.HasIndex("timetableOfClassesid");
 
                     b.ToTable("Class");
                 });
@@ -107,11 +110,11 @@ namespace Audience.DAL.Migrations
 
             modelBuilder.Entity("Audience.DAL.Entities.TimetableOfClasses", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
                     b.Property<TimeSpan>("TimeEnd")
                         .HasColumnType("time");
@@ -119,7 +122,7 @@ namespace Audience.DAL.Migrations
                     b.Property<TimeSpan>("TimeStart")
                         .HasColumnType("time");
 
-                    b.HasKey("Id");
+                    b.HasKey("id");
 
                     b.ToTable("TimetableOfClasses");
                 });
@@ -127,20 +130,20 @@ namespace Audience.DAL.Migrations
             modelBuilder.Entity("Audience.DAL.Entities.Class", b =>
                 {
                     b.HasOne("Audience.DAL.Entities.Audiences", "Audiences")
-                        .WithMany("ItemsClass")
+                        .WithMany()
                         .HasForeignKey("AudiencesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Audience.DAL.Entities.Lecturer", "Lecturer")
-                        .WithMany("ItemsClass")
+                        .WithMany()
                         .HasForeignKey("LecturerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Audience.DAL.Entities.TimetableOfClasses", "timetableOfClasses")
-                        .WithMany("ItemsClass")
-                        .HasForeignKey("timetableOfClassesId")
+                        .WithMany()
+                        .HasForeignKey("timetableOfClassesid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -149,21 +152,6 @@ namespace Audience.DAL.Migrations
                     b.Navigation("Lecturer");
 
                     b.Navigation("timetableOfClasses");
-                });
-
-            modelBuilder.Entity("Audience.DAL.Entities.Audiences", b =>
-                {
-                    b.Navigation("ItemsClass");
-                });
-
-            modelBuilder.Entity("Audience.DAL.Entities.Lecturer", b =>
-                {
-                    b.Navigation("ItemsClass");
-                });
-
-            modelBuilder.Entity("Audience.DAL.Entities.TimetableOfClasses", b =>
-                {
-                    b.Navigation("ItemsClass");
                 });
 #pragma warning restore 612, 618
         }

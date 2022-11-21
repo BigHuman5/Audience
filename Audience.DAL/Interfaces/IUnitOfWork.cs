@@ -13,6 +13,7 @@ namespace Audience.DAL.Interfaces
         IRepository<Audiences> Audiences { get; }
         IRepository<Class> Class { get; }
         IRepository<Lecturer> Lecturer { get; }
+        IRepository<TimetableOfClasses> TimetableOfClasses { get; }
         void Save();
     }
 }

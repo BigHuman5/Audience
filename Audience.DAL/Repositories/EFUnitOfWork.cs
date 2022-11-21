@@ -21,6 +21,7 @@ namespace Audience.DAL.Repositories
         private ClassRepository classRepository;
         private AudiencesRepository audiencesRepository;
         private LecturerRepository lecturerRepository;
+        private TimetableOfClassesRepository timetableOfClassesRepository;
         public IRepository<Audiences> Audiences
         {
             get
@@ -50,6 +51,17 @@ namespace Audience.DAL.Repositories
                 return lecturerRepository;
             }
         }
+
+        public IRepository<TimetableOfClasses> TimetableOfClasses 
+        {
+            get
+            {
+                if (timetableOfClassesRepository == null)
+                    timetableOfClassesRepository = new TimetableOfClassesRepository(db);
+                return timetableOfClassesRepository;
+            }
+        }
+
 
         public void Save()
         {

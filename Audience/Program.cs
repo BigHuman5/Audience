@@ -15,7 +15,9 @@ builder.Services.AddDbContext<AudienceDbContext>(options =>
 
 builder.Services
     .AddScoped<IUnitOfWork, EFUnitOfWork>()
-    .AddTransient<IAudiencesServices, AudiencesServices>();
+    .AddTransient<IAudiencesServices, AudiencesServices>()
+    .AddTransient<IClassServices, ClassServices>()
+    .AddTransient<ILecturerServices, LecturerServices>();
 
 builder.Services.AddControllers();
 

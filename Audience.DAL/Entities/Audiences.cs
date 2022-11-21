@@ -14,5 +14,7 @@ namespace Audience.DAL.Entities
         [Required]
         public string Number { get; set; }
         public bool IsHaveMedia { get; set; } = false;
+
+        public IEnumerable<Class> ItemsClass { get; set; }
     }
 }

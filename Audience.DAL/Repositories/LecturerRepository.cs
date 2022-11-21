@@ -55,7 +55,7 @@ namespace Audience.DAL.Repositories
 
         public async Task<bool> isHaveItem(string item, string mean)
         {
-            var Item = await db.Audiences
+            var Item = await db.Lecturers
                 .Where(a => item == mean)
                 .AsNoTracking()
                 .FirstOrDefaultAsync();

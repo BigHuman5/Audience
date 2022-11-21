@@ -1,83 +1,29 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Audience.BLL.DTO;
+using Audience.BLL.Interfaces;
+using Audience.Models.Audiences;
+using Audience.Models.Class;
+using Audience.Models.Lecturer;
+using Audience.Models.TimetableOfClasses;
+using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Audience.Controllers
 {
-    public class ClassController : Controller
+    public class ClassController : ApiController
     {
-        // GET: ClassController
-        public ActionResult Index()
+        IClassServices services;
+
+        public ClassController(IClassServices services)
         {
-            return View();
+            this.services = services;
         }
 
-        // GET: ClassController/Details/5
-        public ActionResult Details(int id)
+        [HttpGet]
+        public async Task<ActionResult> All()
         {
-            return View();
-        }
-
-        // GET: ClassController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: ClassController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: ClassController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: ClassController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: ClassController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: ClassController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            //var Class = await new ClassResponseModelBuilder.Build();
+            return Ok(await new ClassResponseModelBuilder(this.services).Build());
         }
     }
 }
