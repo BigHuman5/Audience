@@ -21,11 +21,40 @@ namespace Audience.Controllers
         [HttpGet]
         public async Task<ActionResult> All()
         {
-            IEnumerable<AudiencesDTO> audiencesDTO = await services.GetAll();
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<AudiencesDTO, AudiencesResponseModel>()).CreateMapper();
-            var audiencesResponseModels = mapper.Map<IEnumerable<AudiencesDTO>, List<AudiencesResponseModel>>(audiencesDTO);
+            return Ok(await new AudiencesBuilder(this.services).BuildAll());
+        }
 
-            return Ok(audiencesResponseModels);
+        [HttpPost]
+        public async Task<ActionResult> Add(AudiencesAddRequestModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var modelDTO = await new AudiencesBuilder(this.services).BuildAdd(model);
+                var result = await services.Create(modelDTO);
+                if (result.Failure)
+                {
+                    return BadRequest(result.Message);
+                }
+
+                return Ok(result);
+            }
+            return BadRequest();
+        }
+
+        [HttpDelete]
+        public async Task<ActionResult> Delete(int id)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await services.Delete(id);
+                if (result.Failure)
+                {
+                    return BadRequest(result.Message);
+                }
+
+                return Ok(result);
+            }
+            return BadRequest();
         }
     }
 }

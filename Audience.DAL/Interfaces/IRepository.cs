@@ -1,4 +1,5 @@
-﻿using Audience.Infrastructure.Services;
+﻿using Audience.DAL.Entities;
+using Audience.Infrastructure.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,6 @@ namespace Audience.DAL.Interfaces
         Task<T> Get(int id);
         Task<bool> Create(T item);
         Task<bool> Delete(int id);
-        Task<bool> isHaveItem(string item, string mean);
+        Task<T> FirstOrDefaultAsync(T model);
     }
 }

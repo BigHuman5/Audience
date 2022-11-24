@@ -2,6 +2,7 @@
 using Audience.BLL.Interfaces;
 using Audience.DAL.Entities;
 using Audience.DAL.Interfaces;
+using Audience.Infrastructure.Services;
 using AutoMapper;
 
 namespace Audience.BLL.Services
@@ -14,6 +15,7 @@ namespace Audience.BLL.Services
         {
             Database = database;
         }
+
         public async Task<TimetableOfClassesDTO> Get(int id)
         {
             var get = await Database.TimetableOfClasses.Get(id);

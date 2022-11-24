@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Audience.DAL.Repositories
 {
-    public class LecturerRepository : IRepository<Lecturer>
+    public class LecturerRepository : ILecturerRepository
     {
         private AudienceDbContext db;
 
@@ -53,17 +53,18 @@ namespace Audience.DAL.Repositories
             return await db.Lecturers.AsNoTracking().ToListAsync();
         }
 
-        public async Task<bool> isHaveItem(string item, string mean)
+
+        public async Task<Lecturer> FirstOrDefaultAsync(Lecturer model)
         {
-            var Item = await db.Lecturers
-                .Where(a => item == mean)
-                .AsNoTracking()
-                .FirstOrDefaultAsync();
+            var Item = await db.Lecturers.FirstOrDefaultAsync(
+                x=>(x.SurName==model.SurName 
+                && x.Name==model.Name
+                && x.SurName==model.SurName));
             if (Item != null)
             {
-                return true;
+                return Item;
             }
-            return false;
+            return null;
         }
     }
 }

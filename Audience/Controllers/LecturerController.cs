@@ -2,6 +2,7 @@
 using Audience.BLL.Interfaces;
 using Audience.BLL.Services;
 using Audience.DAL.Entities;
+using Audience.Infrastructure.Services;
 using Audience.Models.Class;
 using Audience.Models.Lecturer;
 using AutoMapper;
@@ -21,13 +22,40 @@ namespace Audience.Controllers
         [HttpGet]
         public async Task<ActionResult> All()
         {
-            /*IEnumerable<LecturerDTO> lecturerDTO = await services.GetAll();
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<LecturerDTO, LecturerResponseModel>()).CreateMapper();
-            var lecturerResponseModels = mapper.Map<IEnumerable<LecturerDTO>, List<LecturerResponseModel>>(lecturerDTO);
+            return Ok(await new LecturerBuilder(this.services).BuildAll());
+        }
 
-            //IEnumerable<Lecturer> all = await services.GetAll();
-            return Ok(lecturerResponseModels);*/
-            return Ok(await new LecturerResponseModelBuilder(this.services).Build());
+        [HttpPost]
+        public async Task<ActionResult> Add(LecturerAddRequestModel model)
+        {
+            if(ModelState.IsValid)
+            {
+                var modelDTO = await new LecturerBuilder(this.services).BuildAdd(model);
+                var result = await services.Create(modelDTO);
+                if (result.Failure)
+                {
+                    return BadRequest(result.Message);
+                }
+
+                return Ok(result);
+            }
+            return BadRequest();
+        }
+
+        [HttpDelete]
+        public async Task<ActionResult> Delete(int id)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await services.Delete(id);
+                if (result.Failure)
+                {
+                    return BadRequest(result.Message);
+                }
+
+                return Ok(result);
+            }
+            return BadRequest();
         }
     }
 }

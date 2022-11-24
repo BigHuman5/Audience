@@ -17,12 +17,16 @@ namespace Audience.BLL.Services
             Database = database;
         }
 
-        public async Task<Result> Create(Audiences item)
+        public async Task<Result> Create(AudiencesDTO item)
         {
             if (item == null) return "Ошибка";
             //Проверка наличия такого же кабинета.
-            bool checkHaveNumber = await Database.Audiences.isHaveItem("Number", item.Number);
-            if (checkHaveNumber)
+            var search = await Database.Audiences.FirstOrDefaultAsync(
+                new Audiences
+                {
+                    Number=item.Number
+                });
+            if (search != null)
             {
                 return "Такая аудитория уже есть";
             }
@@ -36,7 +40,11 @@ namespace Audience.BLL.Services
             if (create)
             {
                 Database.Save();
-                return "Аудитория добавлена";
+                return new Result
+                {
+                    Success = true,
+                    Message = "Аудитория добавлена"
+                };
             }
             return "Аудитория НЕ добавлена";
         }
@@ -49,7 +57,11 @@ namespace Audience.BLL.Services
                 return "Ошибка удаления. Такой элемент не найден.";
             }
 
-            return "Элемент удалён";
+            return new Result
+            {
+                Success = true,
+                Message = "Элемент удалён"
+            };
 
         }
 

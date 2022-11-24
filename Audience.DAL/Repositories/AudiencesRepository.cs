@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Audience.DAL.Repositories
 {
-    public class AudiencesRepository : IRepository<Audiences>
+    public class AudiencesRepository : IAudienceRepository
     {
         private AudienceDbContext db;
 
@@ -32,6 +32,7 @@ namespace Audience.DAL.Repositories
             if (Audience != null)
             {
                 db.Audiences.Remove(Audience);
+                db.SaveChanges();
                 return true;
             }
             return false;
@@ -52,17 +53,15 @@ namespace Audience.DAL.Repositories
             return await db.Audiences.ToListAsync();
         }
 
-        public async Task<bool> isHaveItem(string item,string mean)
+        public async Task<Audiences> FirstOrDefaultAsync(Audiences model)
         {
-            var Item = await db.Audiences
-                .Where(a => item == mean)
-                .AsNoTracking()
-                .FirstOrDefaultAsync();
+            var Item = await db.Audiences.FirstOrDefaultAsync(
+                x => (x.Number == model.Number));
             if (Item != null)
             {
-                return true;
+                return Item;
             }
-            return false;
+            return null;
         }
     }
 }

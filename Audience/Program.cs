@@ -17,7 +17,8 @@ builder.Services
     .AddScoped<IUnitOfWork, EFUnitOfWork>()
     .AddTransient<IAudiencesServices, AudiencesServices>()
     .AddTransient<IClassServices, ClassServices>()
-    .AddTransient<ILecturerServices, LecturerServices>();
+    .AddTransient<ILecturerServices, LecturerServices>()
+    .AddTransient<ITimetableOfClasseServices, TimetableOfClasseServices>();
 
 builder.Services.AddControllers();
 

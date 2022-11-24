@@ -25,5 +25,23 @@ namespace Audience.Controllers
             //var Class = await new ClassResponseModelBuilder.Build();
             return Ok(await new ClassResponseModelBuilder(this.services).Build());
         }
+
+        [HttpPost]
+        public async Task<ActionResult> Index(ClassGetDateRequestModel model)
+        {
+            return Ok(await new ClassResponseModelBuilder(this.services).BuildGetDate(model));
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Add(ClassAddRequestModel model)
+        {
+            var Builder = await new ClassResponseModelBuilder(this.services).BuildAdd(model);
+
+            if(Builder.Success ==true)
+            {
+                return Ok();
+            }
+            return BadRequest(Builder.Message);
+        }
     }
 }

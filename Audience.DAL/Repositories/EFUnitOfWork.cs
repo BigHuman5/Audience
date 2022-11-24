@@ -22,7 +22,7 @@ namespace Audience.DAL.Repositories
         private AudiencesRepository audiencesRepository;
         private LecturerRepository lecturerRepository;
         private TimetableOfClassesRepository timetableOfClassesRepository;
-        public IRepository<Audiences> Audiences
+        public IAudienceRepository Audiences
         {
             get
             {
@@ -32,7 +32,7 @@ namespace Audience.DAL.Repositories
             }
         }
 
-        public IRepository<Class> Class
+        public IClassRepository Class
         {
             get
             {
@@ -42,7 +42,7 @@ namespace Audience.DAL.Repositories
             }
         }
 
-        public IRepository<Lecturer> Lecturer
+        public ILecturerRepository Lecturer
         {
             get
             {

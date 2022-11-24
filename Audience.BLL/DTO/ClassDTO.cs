@@ -18,4 +18,6 @@ namespace Audience.BLL.DTO
         public LecturerDTO Lecturer { get; set; }
         public bool isNeedMedia { get; set; }
     }
+
+
 }

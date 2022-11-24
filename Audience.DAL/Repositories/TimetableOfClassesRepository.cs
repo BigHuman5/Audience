@@ -47,17 +47,17 @@ namespace Audience.DAL.Repositories
             return await db.TimetableOfClasses.AsNoTracking().ToListAsync();
         }
 
-        public async Task<bool> isHaveItem(string item, string mean)
+
+        public async Task<TimetableOfClasses> FirstOrDefaultAsync(TimetableOfClasses model)
         {
-            var Item = await db.TimetableOfClasses
-                .Where(a => item == mean)
-                .AsNoTracking()
-                .FirstOrDefaultAsync();
+            var Item = await db.TimetableOfClasses.FirstOrDefaultAsync(
+                x => (x.TimeStart == model.TimeStart
+                && x.TimeEnd == model.TimeEnd));
             if (Item != null)
             {
-                return true;
+                return Item;
             }
-            return false;
+            return null;
         }
     }
 }

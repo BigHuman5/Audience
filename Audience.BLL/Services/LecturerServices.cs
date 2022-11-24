@@ -17,9 +17,22 @@ namespace Audience.BLL.Services
             Database = database;
         }
 
-        public async Task<Result> Create(Lecturer item)
+        public async Task<Result> Create(LecturerDTO item)
         {
             if (item == null) return "Ошибка";
+
+            var search = await Database.Lecturer.FirstOrDefaultAsync(
+                new Lecturer
+                {
+                    SurName=item.SurName,
+                    Name = item.Name,
+                    Patronymic=item.Patronymic,
+                });
+
+            if(search != null)
+            {
+                return "Такой преподаватель уже есть.";
+            }
 
             Lecturer lecturer = new Lecturer
             {
@@ -31,7 +44,11 @@ namespace Audience.BLL.Services
             if (create)
             {
                 Database.Save();
-                return "Преподаватель добавлен";
+                return new Result
+                {
+                    Success = true,
+                    Message = "Преподаватель добавлен"
+                };
             }
             return "Преподаватель НЕ добавлен";
         }
@@ -44,7 +61,11 @@ namespace Audience.BLL.Services
                 return "Ошибка удаления. Такой элемент не найден.";
             }
 
-            return "Элемент удалён";
+            return new Result
+            {
+                Success = true,
+                Message = "Элемент удалён"
+            };
 
         }
 

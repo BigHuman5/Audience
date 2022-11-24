@@ -11,7 +11,7 @@ namespace Audience.BLL.Interfaces
 {
     public interface ILecturerServices
     {
-        Task<Result> Create(Lecturer lecturer);
+        Task<Result> Create(LecturerDTO lecturer);
         Task<IEnumerable<LecturerDTO>> GetAll();
         Task<LecturerDTO> Get(int id);
         Task<Result> Delete(int id);
