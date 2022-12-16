@@ -13,7 +13,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Audience.Infrastructure", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebView", "..\WebView\WebView.csproj", "{60701417-7DBC-47E5-80D3-D03228C5CD5F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Audience.Tests", "..\Audience.Tests\Audience.Tests.csproj", "{4D2AD13C-F768-4FEB-B3BC-B90871C6375E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Audience.Tests", "..\Audience.Tests\Audience.Tests.csproj", "{4D2AD13C-F768-4FEB-B3BC-B90871C6375E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{22463374-70A6-4113-BAA2-558FD7489E8B} = {22463374-70A6-4113-BAA2-558FD7489E8B}
+		{2D5023F2-04D7-4914-A520-3469D2F9B1BE} = {2D5023F2-04D7-4914-A520-3469D2F9B1BE}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -13,5 +13,20 @@ namespace Audience.BLL.DTO
         public string SurName { get; set; }
         public string Name { get; set; }
         public string Patronymic { get; set; }
+
+        public LecturerDTO(int id, string surName, string name, string patronymic)
+        {
+            Id = id;
+            SurName = surName;
+            Name = name;
+            Patronymic = patronymic;
+        }
+
+        public LecturerDTO(int id)
+        {
+            Id = id;
+        }
+
+        public LecturerDTO() { }
     }
 }

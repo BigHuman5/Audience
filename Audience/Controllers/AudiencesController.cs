@@ -27,7 +27,7 @@ namespace Audience.Controllers
         [HttpPost]
         public async Task<ActionResult> Add(AudiencesAddRequestModel model)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && !string.IsNullOrEmpty(model.Number))
             {
                 var modelDTO = await new AudiencesBuilder(this.services).BuildAdd(model);
                 var result = await services.Create(modelDTO);

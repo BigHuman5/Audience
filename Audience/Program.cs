@@ -14,7 +14,7 @@ builder.Services.AddDbContext<AudienceDbContext>(options =>
     options.UseSqlServer(connectionString));
 
 builder.Services
-    .AddScoped<IUnitOfWork, EFUnitOfWork>()
+    .AddTransient<IUnitOfWork, EFUnitOfWork>()
     .AddTransient<IAudiencesServices, AudiencesServices>()
     .AddTransient<IClassServices, ClassServices>()
     .AddTransient<ILecturerServices, LecturerServices>()
